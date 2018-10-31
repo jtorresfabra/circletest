@@ -28,13 +28,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-gnu-anonymous-struct")
 endif()
 
-# native stuff
-if(NOT DEFINED EMSCRIPTEN)
-    find_package(OpenGL REQUIRED)
-    find_package(glfw3 REQUIRED)
-    set(CLANG_FORMAT_EXCLUDE_PATTERNS "build/" "deps/")
-    include("${CMAKE_MODULE_PATH}/ClangFormat.cmake")
-endif(NOT DEFINED EMSCRIPTEN)
+set(CLANG_FORMAT_EXCLUDE_PATTERNS "build/" "deps/" "emsdk/")
+include("${CMAKE_MODULE_PATH}/ClangFormat.cmake")
 
 add_subdirectory(src)
 

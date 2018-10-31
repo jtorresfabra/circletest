@@ -3,9 +3,6 @@
 
 namespace circle {
 
-void circle_function()
-{
-    printf("circle!\n");
-}
+void circle_function() { printf("circle!\n"); }
 
-} // namespace circle 
+} // namespace circle

@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: "ubuntu:16.04"
+    steps:
+      - checkout
+      - run:
+         name: Installing deps
+         command: apt-get update && apt-get install -y cmake clang-6.0 clang-format-6.0 git  python2.7 nodejs && ln -s /usr/bin/clang-format-6.0 /usr/bin/clang-format
+      - run:
+         name: Install emscripten
+         command: git clone https://github.com/juj/emsdk.git emsdk && cd emsdk && ./emsdk install latest && ./emsdk activate latest &&  source ./emsdk_env.sh
+      - run:
+         name: Compile native
+         command: mkdir build && cd build && CXX=/usr/bin/clang++-6.0 CC=/usr/bin/clang-6.0 cmake .. && make check-format && make -j4
+      - run:
+         name: Compile wasm
+         command: source emsdk/emsdk_env.sh && mkdir build-wasm && cd build-wasm &&  CXX=/usr/bin/clang++-6.0 CC=/usr/bin/clang-6.0 cmake -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_BUILD_TYPE=Release .. && make 
+         
+

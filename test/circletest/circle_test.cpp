@@ -9,7 +9,4 @@
 #define EMSCRIPTEN_KEEPALIVE
 #endif
 
-int main() 
-{
-    circle::circle_function();
-}
+int main() { circle::circle_function(); }
